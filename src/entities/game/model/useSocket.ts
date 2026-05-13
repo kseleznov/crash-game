@@ -22,7 +22,7 @@ export function useSocket() {
     setCrashPoint,
     setMultiplier,
     setCountdown,
-    setMyBet,
+    setBetPlaced,
     prependRecentRound,
     addCurvePoint,
     resetCurve,
@@ -64,16 +64,7 @@ export function useSocket() {
         setStartedAt(data.startedAt);
         setCrashPoint(data.crashPoint);
         setActivePlayers(data.players);
-        setMyBet(
-          data.yourBet
-            ? {
-                betId: "",
-                amount: data.yourBet.amount,
-                autoCashOutAt: data.yourBet.autoCashOutAt,
-                status: data.yourBet.status,
-              }
-            : null,
-        );
+        setBetPlaced(data.yourBet !== null);
         if (data.phase === PHASES.waiting && data.endsAt)
           startCountdown(data.endsAt);
         else clearCountdown();
@@ -86,7 +77,7 @@ export function useSocket() {
         setMultiplier(1.0);
         setCrashPoint(null);
         setStartedAt(null);
-        setMyBet(null);
+        setBetPlaced(false);
         resetCurve();
         startCountdown(data.endsAt);
       },
@@ -138,7 +129,7 @@ export function useSocket() {
     setCrashPoint,
     setMultiplier,
     setCountdown,
-    setMyBet,
+    setBetPlaced,
     prependRecentRound,
     addCurvePoint,
     resetCurve,

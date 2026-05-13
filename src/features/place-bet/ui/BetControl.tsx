@@ -1,5 +1,6 @@
+import { useMemo } from "react";
+import { useBetStore } from "@/entities/bet";
 import { useBet } from "../model/useBet";
-import { useBetStore } from "../model/betStore";
 import { Input } from "@/shared/ui/input";
 import { Toggle } from "@/shared/ui/toggle";
 
@@ -17,11 +18,14 @@ export function BetControl() {
     setHalfHandler,
   } = useBet();
 
-  const quickButtons = [
-    { label: "½", onClick: setHalfHandler },
-    { label: "×2", onClick: setDoubleHandler },
-    { label: "Max", onClick: setMaxHandler },
-  ];
+  const quickButtons = useMemo(
+    () => [
+      { label: "½", onClick: setHalfHandler },
+      { label: "×2", onClick: setDoubleHandler },
+      { label: "Max", onClick: setMaxHandler },
+    ],
+    [setHalfHandler, setDoubleHandler, setMaxHandler],
+  );
 
   return (
     <div className="flex flex-col gap-3">

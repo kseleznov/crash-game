@@ -1,3 +1,3 @@
 export { BetControl } from "./ui/BetControl";
-export { useBetStore } from "./model/betStore";
 export { useBet } from "./model/useBet";
+export { useBetSocket } from "./model/useBetSocket";

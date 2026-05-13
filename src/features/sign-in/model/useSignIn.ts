@@ -1,6 +1,6 @@
 "use client";
 
-import { type SubmitEvent, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { trimValue } from "@/shared/lib/trimValue";
 import { setApiKey } from "@/shared/lib/apiKey";
@@ -11,20 +11,25 @@ export function useSignIn() {
   const router = useRouter();
   const trimmedKey = trimValue(key);
 
-  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.BaseSyntheticEvent) {
     event.preventDefault();
+
     setApiKey(trimmedKey, rememberMe);
+
     router.push("/game");
   }
 
   const usernameInputHandler = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => setKey(event.target.value),
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setKey(event.target.value);
+    },
     [setKey],
   );
 
   const rememberMeHandler = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) =>
-      setRememberMe(event.target.checked),
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setRememberMe(event.target.checked);
+    },
     [setRememberMe],
   );
 

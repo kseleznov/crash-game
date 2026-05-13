@@ -1,6 +1,6 @@
 type BetAction = () => void;
 
-interface BetState {
+export interface BetState {
   betAmount: number;
   autoCashout: boolean;
   autoCashoutMultiplier: number | null;
@@ -14,5 +14,3 @@ interface BetState {
   setCashOutWin: (value: number | null) => void;
   reset: () => void;
 }
-
-export type { BetState };

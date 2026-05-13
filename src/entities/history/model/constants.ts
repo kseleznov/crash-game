@@ -14,6 +14,6 @@ export const TIER_COLORS: Record<Round["tier"], Record<string, string>> = {
   high: {
     color: "#05DF72",
     border: "#0D542B",
-    backgroundColor: " #032E1566",
+    backgroundColor: "#032E1566",
   },
 };

@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { socket } from "@/shared/api/socket";
 import { removeApiKey } from "@/shared/lib/apiKey";
 import { useGameStore } from "@/entities/game";
-import { useBetStore } from "@/features/place-bet";
+import { useBetStore } from "@/entities/bet";
 
 export function useSignOut() {
   const router = useRouter();

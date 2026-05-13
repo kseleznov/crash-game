@@ -14,7 +14,7 @@ export function SignOut() {
   const signOut = useSignOut();
 
   return (
-    <div className="pt-[10px] pr-[10px] pb-[10px] pl-[10px] flex gap-[8px] bg-[#1A1F2E] rounded-[16px]">
+    <div className="px-4 py-3 flex gap-4 bg-[#1A1F2E] rounded-2xl">
       <span className="text-white">{username}</span>
       <button onClick={signOut}>
         <span className="text-red-100">sign out</span>

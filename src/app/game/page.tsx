@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ConnectionStatus,
   CurveDisplay,
@@ -9,13 +9,18 @@ import {
 } from "@/entities/game";
 import { History } from "@/entities/history";
 import { SignOut } from "@/features/sign-out";
+import { useBetSocket } from "@/features/place-bet";
 import { BetForm } from "@/widget/bet-form";
 import { LivePlayers, LivePlayersDrawer } from "@/widget/live-players";
 
 export default function Game() {
   useSocket();
+  useBetSocket();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { roundId, activePlayers } = useGameStore();
+
+  const openDrawer = useCallback(() => setDrawerOpen(true), []);
+  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
 
   return (
     <div className="flex flex-col h-screen">
@@ -40,7 +45,7 @@ export default function Game() {
         </span>
         <button
           type="button"
-          onClick={() => setDrawerOpen(true)}
+          onClick={openDrawer}
           className="flex items-center gap-1.5 text-muted hover:text-input-value transition-colors"
         >
           <svg
@@ -70,10 +75,7 @@ export default function Game() {
         <SignOut />
       </div>
 
-      <LivePlayersDrawer
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      />
+      <LivePlayersDrawer isOpen={drawerOpen} onClose={closeDrawer} />
     </div>
   );
 }

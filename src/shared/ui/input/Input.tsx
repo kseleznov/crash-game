@@ -21,7 +21,7 @@ export function Input({
       <input
         id={id}
         type={type}
-        value={value}
+        value={value ?? ""}
         min={min}
         max={max}
         onChange={onChange}

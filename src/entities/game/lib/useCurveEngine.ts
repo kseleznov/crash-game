@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { CURVE_COLORS } from "../model/constants";
 
 interface CurveEngineOptions {
   curvePoints: { x: number; y: number }[];
@@ -94,9 +95,9 @@ export function useCurveEngine({ curvePoints, crashed }: CurveEngineOptions) {
         y: height - 20 - p.y * scaleY,
       });
 
-      const color = crashed ? "#EF4444" : "#22C55E";
+      const colors = crashed ? CURVE_COLORS.crashed : CURVE_COLORS.running;
 
-      ctx.strokeStyle = color;
+      ctx.strokeStyle = colors.stroke;
       ctx.lineWidth = 3;
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
@@ -109,7 +110,7 @@ export function useCurveEngine({ curvePoints, crashed }: CurveEngineOptions) {
       });
       ctx.stroke();
 
-      ctx.fillStyle = crashed ? "rgba(239,68,68,0.15)" : "rgba(34,197,94,0.15)";
+      ctx.fillStyle = colors.fill;
       ctx.beginPath();
       displayPoints.forEach((p, i) => {
         const { x, y } = toCanvas(p);
@@ -130,10 +131,7 @@ export function useCurveEngine({ curvePoints, crashed }: CurveEngineOptions) {
         tipCanvas.y,
         18,
       );
-      glow.addColorStop(
-        0,
-        crashed ? "rgba(239,68,68,0.6)" : "rgba(34,197,94,0.6)",
-      );
+      glow.addColorStop(0, colors.glow);
       glow.addColorStop(1, "rgba(0,0,0,0)");
       ctx.beginPath();
       ctx.arc(tipCanvas.x, tipCanvas.y, 18, 0, Math.PI * 2);
@@ -142,7 +140,7 @@ export function useCurveEngine({ curvePoints, crashed }: CurveEngineOptions) {
 
       ctx.beginPath();
       ctx.arc(tipCanvas.x, tipCanvas.y, 5, 0, Math.PI * 2);
-      ctx.fillStyle = color;
+      ctx.fillStyle = colors.stroke;
       ctx.fill();
 
       animRef.current = requestAnimationFrame(draw);

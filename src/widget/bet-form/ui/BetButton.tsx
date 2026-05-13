@@ -2,7 +2,8 @@
 
 import { useCallback } from "react";
 import { useGameStore } from "@/entities/game";
-import { useBet, useBetStore } from "@/features/place-bet";
+import { useBetStore } from "@/entities/bet";
+import { useBet } from "@/features/place-bet";
 import { useCashOut } from "@/features/cash-out";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/cn";

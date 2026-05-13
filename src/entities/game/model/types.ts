@@ -9,13 +9,6 @@ interface Player {
   username: string;
 }
 
-interface MyBet {
-  betId: string;
-  amount: number;
-  autoCashOutAt: number | null;
-  status: "placed" | "cashedOut" | "lost";
-}
-
 interface RecentRound {
   roundId: string;
   crashPoint: number;
@@ -95,9 +88,8 @@ interface GameStore {
   crashPoint: number | null;
   currentMultiplier: number;
   countdown: number;
-  myBet: MyBet | null;
+  betPlaced: boolean;
   recentRounds: RecentRound[];
-  actionInFlight: boolean;
   curvePoints: { x: number; y: number }[];
   activePlayers: Player[] | null;
 
@@ -108,9 +100,8 @@ interface GameStore {
   setCrashPoint: (crashPoint: number | null) => void;
   setMultiplier: (multiplier: number) => void;
   setCountdown: (countdown: number) => void;
-  setMyBet: (myBet: MyBet | null) => void;
+  setBetPlaced: (betPlaced: boolean) => void;
   prependRecentRound: (round: RecentRound) => void;
-  setActionInFlight: (value: boolean) => void;
   addCurvePoint: (point: { x: number; y: number }) => void;
   resetCurve: () => void;
   reset: () => void;
@@ -125,7 +116,6 @@ interface BetPlace {
 export type {
   Phase,
   SocketStatus,
-  MyBet,
   RecentRound,
   RoundState,
   RoundWaiting,

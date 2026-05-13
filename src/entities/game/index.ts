@@ -1,4 +1,5 @@
 export { useSocket } from "./model/useSocket";
+export { CURVE_COLORS } from "./model/constants";
 export { ConnectionStatus } from "./ui/ConnectionStatus";
 export { CurveDisplay } from "./ui/CurveDisplay";
 export { useGameStore } from "./model/gameStore";
@@ -9,7 +10,6 @@ export type {
   BetCashedOut,
   BetRejected,
   Phase,
-  MyBet,
   RecentRound,
   Player,
 } from "./model/types";
