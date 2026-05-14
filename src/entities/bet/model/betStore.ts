@@ -4,7 +4,7 @@ import type { BetState } from "./types";
 const initialState = {
   betAmount: 10,
   autoCashout: false,
-  autoCashoutMultiplier: null,
+  autoCashoutMultiplier: 2,
   cashOutWin: null,
 };
 

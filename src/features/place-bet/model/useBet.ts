@@ -23,21 +23,24 @@ export function useBet() {
   const isDisabled = phase === "crashed" || isPending;
   const displayPhase: Phase | "pending" = isPending ? "pending" : phase;
 
-  const setBetHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
+  function setBetHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setBet(Number(event.target.value));
+  }
 
-  const setAutoCashoutMultiplierHandler = (
+  function setAutoCashoutMultiplierHandler(
     event: React.ChangeEvent<HTMLInputElement>,
-  ) => setAutoCashoutMultiplier(Number(event.target.value));
+  ) {
+    setAutoCashoutMultiplier(Number(event.target.value));
+  }
 
-  const placeBet = () => {
+  function placeBet() {
     playSound("start");
 
     socket.emit("bet:place", {
       amount: betAmount,
       autoCashOutAt: autoCashout ? autoCashoutMultiplier : null,
     });
-  };
+  }
 
   return {
     balance,
