@@ -11,22 +11,31 @@ const initialState = {
 export const useBetStore = create<BetState>((set, get) => ({
   ...initialState,
 
-  reset: () => set(initialState),
+  reset: () => {
+    set(initialState);
+  },
 
-  setCashOutWin: (value) => set({ cashOutWin: value }),
+  setCashOutWin: (value) => {
+    set({ cashOutWin: value });
+  },
 
   setBet: (value) => {
-    if (value < 1) return;
+    if (value < 1) {
+      return;
+    }
+
     set({ betAmount: value });
   },
 
   half: () => {
     const { betAmount } = get();
+
     set({ betAmount: Math.floor(betAmount / 2) });
   },
 
   double: (balance) => {
     const { betAmount } = get();
+
     set({ betAmount: Math.min(betAmount * 2, balance) });
   },
 
@@ -36,6 +45,7 @@ export const useBetStore = create<BetState>((set, get) => ({
 
   toggleAutoCashout: () => {
     const { autoCashout } = get();
+
     set({ autoCashout: !autoCashout });
   },
 

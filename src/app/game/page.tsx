@@ -16,9 +16,9 @@ import { LivePlayers, LivePlayersDrawer } from "@/widget/live-players";
 export default function Game() {
   useSocket();
   useBetSocket();
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { roundId, activePlayers } = useGameStore();
-
   const openDrawer = useCallback(() => setDrawerOpen(true), []);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
 

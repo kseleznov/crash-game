@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useBalanceQuery } from "@/entities/balance";
 import { socket } from "@/shared/api/socket";
 import { useBetStore } from "@/entities/bet";
@@ -24,50 +23,30 @@ export function useBet() {
   const isDisabled = phase === "crashed" || isPending;
   const displayPhase: Phase | "pending" = isPending ? "pending" : phase;
 
-  const setBetHandler = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
-        balance > 0
-          ? Math.min(Number(event.target.value), balance)
-          : Number(event.target.value);
+  const setBetHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setBet(Number(event.target.value));
 
-      setBet(value);
-    },
-    [setBet, balance],
-  );
+  const setAutoCashoutMultiplierHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => setAutoCashoutMultiplier(Number(event.target.value));
 
-  const setAutoCashoutMultiplierHandler = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setAutoCashoutMultiplier(Number(event.target.value));
-    },
-    [setAutoCashoutMultiplier],
-  );
-
-  const setDoubleHandler = useCallback(
-    () => double(balance),
-    [double, balance],
-  );
-
-  const setMaxHandler = useCallback(() => max(balance), [max, balance]);
-
-  const setHalfHandler = useCallback(() => half(), [half]);
-
-  const placeBet = useCallback(() => {
+  const placeBet = () => {
     playSound("start");
+
     socket.emit("bet:place", {
       amount: betAmount,
       autoCashOutAt: autoCashout ? autoCashoutMultiplier : null,
     });
-  }, [betAmount, autoCashoutMultiplier, autoCashout]);
+  };
 
   return {
     balance,
     placeBet,
     setBetHandler,
-    setMaxHandler,
-    setHalfHandler,
-    setDoubleHandler,
     setAutoCashoutMultiplierHandler,
+    half,
+    double,
+    max,
     isDisabled,
     betPlaced,
     displayPhase,

@@ -1,4 +1,4 @@
-type BetAction = () => void;
+export type BetAction = () => void;
 
 export interface BetState {
   betAmount: number;

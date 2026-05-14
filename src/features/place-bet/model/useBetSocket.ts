@@ -17,44 +17,42 @@ export function useBetSocket() {
   const setCashOutWin = useBetStore((state) => state.setCashOutWin);
 
   useEffect(() => {
-    function handleBetPlaced(data: BetPlaced) {
-      setBalanceQuery(data);
-      setBetPlaced(true);
-    }
+    const handlers = {
+      "bet:placed": (data: BetPlaced) => {
+        setBalanceQuery(data);
+        setBetPlaced(true);
+      },
 
-    function handleBetCashedOut(data: BetCashedOut) {
-      setBalanceQuery(data);
-      setBetPlaced(false);
-      setCashOutWin(data.profit);
-      toast.success(`Cashed out @ ${data.multiplier}× +${data.profit}`);
-    }
+      "bet:cashedOut": (data: BetCashedOut) => {
+        setBalanceQuery(data);
+        setBetPlaced(false);
+        setCashOutWin(data.profit);
+        toast.success(`Cashed out @ ${data.multiplier}× +${data.profit}`);
+      },
 
-    function handleBetLost(data: BetLost) {
-      setBalanceQuery(data);
-      setBetPlaced(false);
-      toast.error(`Crashed @ ${data.crashPoint}×`);
-    }
+      "bet:lost": (data: BetLost) => {
+        setBalanceQuery(data);
+        setBetPlaced(false);
+        toast.error(`Crashed @ ${data.crashPoint}×`);
+      },
 
-    function handleBetRejected(data: BetRejected) {
-      toast.error(data.message);
-    }
+      "bet:rejected": (data: BetRejected) => {
+        toast.error(data.message);
+      },
 
-    function handleRoundWaiting() {
-      setCashOutWin(null);
-    }
+      "round:waiting": () => {
+        setCashOutWin(null);
+      },
+    };
 
-    socket.on("bet:placed", handleBetPlaced);
-    socket.on("bet:cashedOut", handleBetCashedOut);
-    socket.on("bet:lost", handleBetLost);
-    socket.on("bet:rejected", handleBetRejected);
-    socket.on("round:waiting", handleRoundWaiting);
+    Object.entries(handlers).forEach(([event, handler]) =>
+      socket.on(event, handler),
+    );
 
     return () => {
-      socket.off("bet:placed", handleBetPlaced);
-      socket.off("bet:cashedOut", handleBetCashedOut);
-      socket.off("bet:lost", handleBetLost);
-      socket.off("bet:rejected", handleBetRejected);
-      socket.off("round:waiting", handleRoundWaiting);
+      Object.entries(handlers).forEach(([event, handler]) =>
+        socket.off(event, handler),
+      );
     };
   }, [setBalanceQuery, setBetPlaced, setCashOutWin]);
 }

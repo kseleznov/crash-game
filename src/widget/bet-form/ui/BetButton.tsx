@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback } from "react";
 import { useGameStore } from "@/entities/game";
-import { useBetStore } from "@/entities/bet";
+import { type BetAction, useBetStore } from "@/entities/bet";
 import { useBet } from "@/features/place-bet";
 import { useCashOut } from "@/features/cash-out";
 import { Button } from "@/shared/ui/button";
@@ -16,13 +15,9 @@ export function BetButton() {
   const { cashOut } = useCashOut();
   const { betAmount, cashOutWin } = useBetStore();
 
-  const handleCashOut = useCallback(() => {
-    cashOut();
-  }, [cashOut]);
-
-  const actions: Partial<Record<typeof phase, () => void>> = {
+  const actions: Partial<Record<typeof phase, BetAction>> = {
     waiting: placeBet,
-    running: handleCashOut,
+    running: cashOut,
   };
 
   return (

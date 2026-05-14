@@ -49,10 +49,14 @@ export function SignInForm() {
         className="w-full max-w-[480px] bg-surface border border-card-border rounded-2xl p-6 flex flex-col gap-5"
       >
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold tracking-widest text-muted uppercase">
+          <label
+            htmlFor="username"
+            className="text-xs font-semibold tracking-widest text-muted uppercase"
+          >
             Username
           </label>
           <input
+            id="username"
             value={key}
             onChange={usernameInputHandler}
             placeholder="Enter your username"

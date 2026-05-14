@@ -41,6 +41,7 @@ export function useSocket() {
 
     function startCountdown(endsAt: string) {
       clearCountdown();
+
       const tick = () =>
         setCountdown(
           Math.max(
@@ -48,13 +49,17 @@ export function useSocket() {
             Math.ceil((new Date(endsAt).getTime() - Date.now()) / 1000),
           ),
         );
+
       tick();
+
       countdownInterval = setInterval(tick, 500);
     }
 
     const handlers = {
       connect: () => setStatus("connected"),
+
       disconnect: () => setStatus("disconnected"),
+
       connect_error: () => setStatus("disconnected"),
 
       "round:state": (data: RoundState) => {
@@ -65,44 +70,59 @@ export function useSocket() {
         setCrashPoint(data.crashPoint);
         setActivePlayers(data.players);
         setBetPlaced(data.yourBet !== null);
-        if (data.phase === PHASES.waiting && data.endsAt)
+
+        if (data.phase === PHASES.waiting && data.endsAt) {
           startCountdown(data.endsAt);
-        else clearCountdown();
+        }
+
+        clearCountdown();
       },
 
       "round:waiting": (data: RoundWaiting) => {
         playSound("waiting");
+
         setPhase(PHASES.waiting);
         setRoundId(data.roundId);
         setMultiplier(1.0);
         setCrashPoint(null);
         setStartedAt(null);
         setBetPlaced(false);
+
         resetCurve();
+
         startCountdown(data.endsAt);
       },
 
       "round:start": (data: RoundStart) => {
         clearCountdown();
+
         setPhase(PHASES.running);
         setRoundId(data.roundId);
         setStartedAt(data.startedAt);
         setMultiplier(1.0);
+
         resetCurve();
       },
 
       "round:tick": (data: RoundTick) => {
-        if (data.roundId !== useGameStore.getState().roundId) return;
+        if (data.roundId !== useGameStore.getState().roundId) {
+          return;
+        }
+
         setMultiplier(data.multiplier);
+
         addCurvePoint({ x: data.elapsedMs / 1000, y: data.multiplier });
+
         playSound("tick");
       },
 
       "round:crash": (data: RoundCrash) => {
         playSound("lose");
+
         setPhase(PHASES.crashed);
         setMultiplier(data.crashPoint);
         setCrashPoint(data.crashPoint);
+
         prependRecentRound({
           roundId: data.roundId,
           crashPoint: data.crashPoint,
@@ -118,7 +138,9 @@ export function useSocket() {
 
     return () => {
       clearCountdown();
+
       Object.keys(handlers).forEach((event) => socket.off(event));
+
       socket.disconnect();
     };
   }, [

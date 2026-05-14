@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useBetStore } from "@/entities/bet";
 import { useBet } from "../model/useBet";
 import { Input } from "@/shared/ui/input";
@@ -13,19 +12,16 @@ export function BetControl() {
     isDisabled,
     setBetHandler,
     setAutoCashoutMultiplierHandler,
-    setDoubleHandler,
-    setMaxHandler,
-    setHalfHandler,
+    half,
+    double,
+    max,
   } = useBet();
 
-  const quickButtons = useMemo(
-    () => [
-      { label: "½", onClick: setHalfHandler },
-      { label: "×2", onClick: setDoubleHandler },
-      { label: "Max", onClick: setMaxHandler },
-    ],
-    [setHalfHandler, setDoubleHandler, setMaxHandler],
-  );
+  const quickActions = [
+    { label: "½", onClick: half },
+    { label: "×2", onClick: () => double(balance) },
+    { label: "Max", onClick: () => max(balance) },
+  ];
 
   return (
     <div className="flex flex-col gap-3">
@@ -45,7 +41,7 @@ export function BetControl() {
       />
 
       <div className="flex gap-2">
-        {quickButtons.map(({ label, onClick }) => (
+        {quickActions.map(({ label, onClick }) => (
           <button
             key={label}
             type="button"
