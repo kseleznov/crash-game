@@ -43,7 +43,7 @@ export function LivePlayersDrawer({ isOpen, onClose }: Props) {
           <button
             type="button"
             onClick={onClose}
-            className="text-muted hover:text-input-value transition-colors"
+            className="text-muted hover:text-input-value transition-colors cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -47,7 +47,7 @@ export function SoundToggle() {
       onClick={toggleMute}
       title={isMuted ? "Enable sound" : "Disable sound"}
       className={cn(
-        "w-10 h-10 rounded-lg border flex items-center justify-center transition-colors",
+        "w-10 h-10 rounded-lg border flex items-center justify-center transition-colors cursor-pointer",
         "bg-[#1E2535] border-[#2D3A55] hover:border-[#4A6091]",
         isMuted ? "text-[#6B7A99]" : "text-white",
       )}
