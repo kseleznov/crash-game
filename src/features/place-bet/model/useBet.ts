@@ -3,6 +3,7 @@ import { socket } from "@/shared/api/socket";
 import { useBetStore } from "@/entities/bet";
 import { playSound } from "@/shared/lib/playSound";
 import { type Phase, useGameStore } from "@/entities/game";
+import type { HandlerEvent } from "@/shared/types";
 
 export function useBet() {
   const {
@@ -23,13 +24,11 @@ export function useBet() {
   const isDisabled = phase === "crashed" || isPending;
   const displayPhase: Phase | "pending" = isPending ? "pending" : phase;
 
-  function setBetHandler(event: React.ChangeEvent<HTMLInputElement>) {
+  function setBetHandler(event: HandlerEvent) {
     setBet(Number(event.target.value));
   }
 
-  function setAutoCashoutMultiplierHandler(
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) {
+  function setAutoCashoutMultiplierHandler(event: HandlerEvent) {
     setAutoCashoutMultiplier(Number(event.target.value));
   }
 

@@ -1,9 +1,9 @@
-import * as React from "react";
 import { cn } from "@/shared/lib/cn";
+import type { HandlerEvent } from "@/shared/types";
 
 type ToggleProps = {
   checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: HandlerEvent) => void;
   disabled?: boolean;
   label?: string;
 };

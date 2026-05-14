@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { trimValue } from "@/shared/lib/trimValue";
 import { setApiKey } from "@/shared/lib/apiKey";
+import type { HandlerEvent } from "@/shared/types";
 
 export function useSignIn() {
   const [key, setKey] = useState("");
@@ -19,11 +20,11 @@ export function useSignIn() {
     router.push("/game");
   }
 
-  function usernameInputHandler(event: React.ChangeEvent<HTMLInputElement>) {
+  function usernameInputHandler(event: HandlerEvent) {
     setKey(event.target.value);
   }
 
-  function rememberMeHandler(event: React.ChangeEvent<HTMLInputElement>) {
+  function rememberMeHandler(event: HandlerEvent) {
     setRememberMe(event.target.checked);
   }
 
