@@ -8,12 +8,23 @@ import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/cn";
 import { LABELS, PHASE_STYLES } from "../model/constants";
 import { formatDecimal } from "@/shared/lib/formatDecimal";
+import { useShallow } from "zustand/react/shallow";
 
 export function BetButton() {
-  const { phase, currentMultiplier } = useGameStore();
+  const { phase, currentMultiplier } = useGameStore(
+    useShallow((state) => ({
+      phase: state.phase,
+      currentMultiplier: state.currentMultiplier,
+    })),
+  );
   const { placeBet, isDisabled, displayPhase } = useBet();
   const { cashOut } = useCashOut();
-  const { betAmount, cashOutWin } = useBetStore();
+  const { betAmount, cashOutWin } = useBetStore(
+    useShallow((state) => ({
+      betAmount: state.betAmount,
+      cashOutWin: state.cashOutWin,
+    })),
+  );
 
   const actions: Partial<Record<typeof phase, BetAction>> = {
     waiting: placeBet,

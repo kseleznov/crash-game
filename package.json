@@ -23,6 +23,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "eslint": "^9",
@@ -31,6 +32,7 @@
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-boundaries": "^6.0.2",
     "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react-compiler": "^19.0.0-beta-af1b7da-20250417",
     "prettier": "^3.8.2",
     "tailwindcss": "^4",
     "typescript": "^5"

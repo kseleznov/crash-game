@@ -4,6 +4,7 @@ import nextTs from "eslint-config-next/typescript";
 import prettier from "eslint-plugin-prettier";
 import eslintConfigPrettier from "eslint-config-prettier";
 import boundaries from "eslint-plugin-boundaries";
+import reactCompiler from "eslint-plugin-react-compiler";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -21,9 +22,11 @@ const eslintConfig = defineConfig([
     files: ["**/*.{ts,tsx,js,jsx}"],
     plugins: {
       prettier,
+      "react-compiler": reactCompiler,
     },
     rules: {
       "prettier/prettier": "error",
+      "react-compiler/react-compiler": "error",
       "react/no-multi-comp": ["error", { ignoreStateless: true }],
       "react/forbid-prop-types": [
         "error",

@@ -4,6 +4,7 @@ import { useBetStore } from "@/entities/bet";
 import { playSound } from "@/shared/lib/playSound";
 import { type Phase, useGameStore } from "@/entities/game";
 import type { HandlerEvent } from "@/shared/types";
+import { useShallow } from "zustand/react/shallow";
 
 export function useBet() {
   const {
@@ -15,8 +16,24 @@ export function useBet() {
     setBet,
     double,
     setAutoCashoutMultiplier,
-  } = useBetStore();
-  const { phase, betPlaced } = useGameStore();
+  } = useBetStore(
+    useShallow((state) => ({
+      betAmount: state.betAmount,
+      autoCashoutMultiplier: state.autoCashoutMultiplier,
+      autoCashout: state.autoCashout,
+      max: state.max,
+      half: state.half,
+      setBet: state.setBet,
+      double: state.double,
+      setAutoCashoutMultiplier: state.setAutoCashoutMultiplier,
+    })),
+  );
+  const { phase, betPlaced } = useGameStore(
+    useShallow((state) => ({
+      phase: state.phase,
+      betPlaced: state.betPlaced,
+    })),
+  );
   const { data: balanceData } = useBalanceQuery();
   const balance = balanceData?.balance ?? 0;
   const isPending =

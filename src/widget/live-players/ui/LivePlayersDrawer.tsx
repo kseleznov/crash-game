@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function LivePlayersDrawer({ isOpen, onClose }: Props) {
-  const { activePlayers } = useGameStore();
+  const activePlayers = useGameStore((state) => state.activePlayers);
 
   if (!isOpen) return null;
 

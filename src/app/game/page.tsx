@@ -12,13 +12,13 @@ import { SignOut } from "@/features/sign-out";
 import { useBetSocket } from "@/features/place-bet";
 import { BetForm } from "@/widget/bet-form";
 import { LivePlayers, LivePlayersDrawer } from "@/widget/live-players";
-
 export default function Game() {
   useSocket();
   useBetSocket();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { roundId, activePlayers } = useGameStore();
+  const roundId = useGameStore((state) => state.roundId);
+  const playerCount = useGameStore((state) => state.activePlayers?.length ?? 0);
   const openDrawer = useCallback(() => setDrawerOpen(true), []);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
 
@@ -64,9 +64,7 @@ export default function Game() {
             <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
             <path d="M16 3.13a4 4 0 0 1 0 7.75" />
           </svg>
-          <span className="text-sm font-medium">
-            {activePlayers?.length ?? 0}
-          </span>
+          <span className="text-sm font-medium">{playerCount}</span>
         </button>
       </div>
 
@@ -95,7 +93,7 @@ export default function Game() {
             <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
             <circle cx="12" cy="20" r="1" fill="currentColor" />
           </svg>
-          <span>{activePlayers?.length ?? 0} players</span>
+          <span>{playerCount} players</span>
         </div>
         <SignOut />
       </div>

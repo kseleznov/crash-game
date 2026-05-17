@@ -9,7 +9,7 @@ const STATUS_DOT: Record<string, string> = {
 };
 
 export function ConnectionStatus() {
-  const { status } = useGameStore();
+  const status = useGameStore((state) => state.status);
 
   return (
     <span className="flex items-center gap-1.5">

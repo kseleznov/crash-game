@@ -1,12 +1,20 @@
 "use client";
 
+import { useShallow } from "zustand/react/shallow";
 import { useGameStore } from "../model/gameStore";
 import { useCurveEngine } from "../lib/useCurveEngine";
 import { PHASE_COLORS } from "../model/constants";
 import { formatDecimal } from "@/shared/lib/formatDecimal";
 
 export function CurveDisplay() {
-  const { phase, currentMultiplier, countdown, curvePoints } = useGameStore();
+  const { phase, currentMultiplier, countdown, curvePoints } = useGameStore(
+    useShallow((state) => ({
+      phase: state.phase,
+      currentMultiplier: state.currentMultiplier,
+      countdown: state.countdown,
+      curvePoints: state.curvePoints,
+    })),
+  );
   const crashed = phase === "crashed";
   const { canvasRef } = useCurveEngine({ curvePoints, crashed });
 

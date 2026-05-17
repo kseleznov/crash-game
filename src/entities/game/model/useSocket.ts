@@ -14,22 +14,22 @@ import type {
 import { playSound } from "@/shared/lib/playSound";
 
 export function useSocket() {
-  const {
-    setPhase,
-    setStatus,
-    setRoundId,
-    setStartedAt,
-    setCrashPoint,
-    setMultiplier,
-    setCountdown,
-    setBetPlaced,
-    prependRecentRound,
-    addCurvePoint,
-    resetCurve,
-    setActivePlayers,
-  } = useGameStore();
-
   useEffect(() => {
+    const {
+      setPhase,
+      setStatus,
+      setRoundId,
+      setStartedAt,
+      setCrashPoint,
+      setMultiplier,
+      setCountdown,
+      setBetPlaced,
+      prependRecentRound,
+      addCurvePoint,
+      resetCurve,
+      setActivePlayers,
+    } = useGameStore.getState();
+
     let countdownInterval: ReturnType<typeof setInterval> | null = null;
 
     function clearCountdown() {
@@ -143,18 +143,5 @@ export function useSocket() {
 
       socket.disconnect();
     };
-  }, [
-    setPhase,
-    setStatus,
-    setRoundId,
-    setStartedAt,
-    setCrashPoint,
-    setMultiplier,
-    setCountdown,
-    setBetPlaced,
-    prependRecentRound,
-    addCurvePoint,
-    resetCurve,
-    setActivePlayers,
-  ]);
+  }, []);
 }

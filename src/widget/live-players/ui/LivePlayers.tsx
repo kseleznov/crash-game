@@ -2,7 +2,7 @@ import { useGameStore } from "@/entities/game";
 import { PlayerRow } from "./PlayerRow";
 
 export function LivePlayers() {
-  const { activePlayers } = useGameStore();
+  const activePlayers = useGameStore((state) => state.activePlayers);
 
   if (!activePlayers) return null;
 

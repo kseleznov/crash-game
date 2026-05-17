@@ -2,10 +2,18 @@ import { useBetStore } from "@/entities/bet";
 import { useBet } from "../model/useBet";
 import { Input } from "@/shared/ui/input";
 import { Toggle } from "@/shared/ui/toggle";
+import { useShallow } from "zustand/react/shallow";
 
 export function BetControl() {
   const { betAmount, autoCashout, autoCashoutMultiplier, toggleAutoCashout } =
-    useBetStore();
+    useBetStore(
+      useShallow((state) => ({
+        betAmount: state.betAmount,
+        autoCashout: state.autoCashout,
+        autoCashoutMultiplier: state.autoCashoutMultiplier,
+        toggleAutoCashout: state.toggleAutoCashout,
+      })),
+    );
 
   const {
     balance,
