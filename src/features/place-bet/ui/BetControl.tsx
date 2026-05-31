@@ -1,0 +1,87 @@
+import { useBetStore } from "@/entities/bet";
+import { useBet } from "../model/useBet";
+import { Input } from "@/shared/ui/input";
+import { Toggle } from "@/shared/ui/toggle";
+import { useShallow } from "zustand/react/shallow";
+
+export function BetControl() {
+  const { betAmount, autoCashout, autoCashoutMultiplier, toggleAutoCashout } =
+    useBetStore(
+      useShallow((state) => ({
+        betAmount: state.betAmount,
+        autoCashout: state.autoCashout,
+        autoCashoutMultiplier: state.autoCashoutMultiplier,
+        toggleAutoCashout: state.toggleAutoCashout,
+      })),
+    );
+
+  const {
+    balance,
+    isDisabled,
+    setBetHandler,
+    setAutoCashoutMultiplierHandler,
+    half,
+    double,
+    max,
+  } = useBet();
+
+  const quickActions = [
+    { label: "½", onClick: half },
+    { label: "×2", onClick: () => double(balance) },
+    { label: "Max", onClick: () => max(balance) },
+  ];
+
+  return (
+    <div className="flex flex-col gap-3">
+      <p className="text-muted text-xs font-medium uppercase tracking-wider">
+        Bet Amount
+      </p>
+
+      <Input
+        id="amount"
+        type="number"
+        value={betAmount}
+        min={1}
+        max={balance > 0 ? balance : undefined}
+        onChange={setBetHandler}
+        disabled={isDisabled}
+        currency
+      />
+
+      <div className="flex gap-2">
+        {quickActions.map(({ label, onClick }) => (
+          <button
+            key={label}
+            type="button"
+            onClick={onClick}
+            disabled={isDisabled}
+            className="flex-1 bg-surface-input text-muted rounded-lg py-2 text-sm hover:text-input-value transition-colors disabled:opacity-50"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span className="text-muted text-xs font-medium uppercase tracking-wider">
+          Auto Cash Out
+        </span>
+        <Toggle
+          checked={autoCashout}
+          onChange={toggleAutoCashout}
+          disabled={isDisabled}
+        />
+      </div>
+
+      {autoCashout && (
+        <Input
+          id="multiplier"
+          type="number"
+          value={autoCashoutMultiplier ?? undefined}
+          onChange={setAutoCashoutMultiplierHandler}
+          disabled={isDisabled}
+        />
+      )}
+    </div>
+  );
+}
