@@ -10,6 +10,7 @@ import {
   type BetRejected,
   useGameStore,
 } from "@/entities/game";
+import { playSound } from "@/shared/lib/playSound";
 
 export function useBetSocket() {
   const { setBalanceQuery } = useBalance();
@@ -24,6 +25,7 @@ export function useBetSocket() {
       },
 
       "bet:cashedOut": (data: BetCashedOut) => {
+        playSound("win");
         setBalanceQuery(data);
         setBetPlaced(false);
         setCashOutWin(data.profit);

@@ -25,8 +25,10 @@ export function setApiKey(key: string, remember: boolean) {
   document.cookie = `x-api-key=${encodeURIComponent(key)}; path=/; SameSite=Strict${maxAge}`;
 
   if (remember) {
+    sessionStorage.removeItem(STORAGE_KEYS.apiKey);
     localStorage.setItem(STORAGE_KEYS.apiKey, key);
   } else {
+    localStorage.removeItem(STORAGE_KEYS.apiKey);
     sessionStorage.setItem(STORAGE_KEYS.apiKey, key);
   }
 }

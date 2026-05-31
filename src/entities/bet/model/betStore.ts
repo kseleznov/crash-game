@@ -30,7 +30,7 @@ export const useBetStore = create<BetState>((set, get) => ({
   half: () => {
     const { betAmount } = get();
 
-    set({ betAmount: Math.floor(betAmount / 2) });
+    set({ betAmount: Math.max(1, Math.floor(betAmount / 2)) });
   },
 
   double: (balance) => {

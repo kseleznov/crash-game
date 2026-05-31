@@ -73,9 +73,9 @@ export function useSocket() {
 
         if (data.phase === PHASES.waiting && data.endsAt) {
           startCountdown(data.endsAt);
+        } else {
+          clearCountdown();
         }
-
-        clearCountdown();
       },
 
       "round:waiting": (data: RoundWaiting) => {
@@ -117,6 +117,10 @@ export function useSocket() {
       },
 
       "round:crash": (data: RoundCrash) => {
+        if (data.roundId !== useGameStore.getState().roundId) {
+          return;
+        }
+
         playSound("lose");
 
         setPhase(PHASES.crashed);
@@ -139,7 +143,9 @@ export function useSocket() {
     return () => {
       clearCountdown();
 
-      Object.keys(handlers).forEach((event) => socket.off(event));
+      Object.entries(handlers).forEach(([event, handler]) =>
+        socket.off(event, handler),
+      );
 
       socket.disconnect();
     };

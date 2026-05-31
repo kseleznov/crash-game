@@ -50,6 +50,10 @@ export function useBet() {
   }
 
   function placeBet() {
+    if (phase !== "waiting") return;
+    if (betPlaced) return;
+    if (betAmount <= 0 || betAmount > balance) return;
+
     playSound("start");
 
     socket.emit("bet:place", {
